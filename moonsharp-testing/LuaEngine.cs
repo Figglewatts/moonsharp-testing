@@ -39,9 +39,16 @@ namespace moonsharp_testing
             }
         }
 
-        public void Provide(dynamic obj)
+        public void Provide(object obj)
         {
             _env.Globals[obj.GetType().Name] = obj;
+        }
+
+        public static void RegisterProxy<Proxy, Target>(Func<Target, Proxy> wrapDelegate)
+            where Proxy : class
+            where Target : class
+        {
+            UserData.RegisterProxyType(wrapDelegate);
         }
 
         private void createEnvironment()

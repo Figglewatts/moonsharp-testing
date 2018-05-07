@@ -7,18 +7,46 @@ using MoonSharp.Interpreter;
 
 namespace moonsharp_testing
 {
-    [MoonSharpUserData]
     public class StateClass
     {
-        public int Counter { get; private set; }
+        public int Counter { get; set; }
+
+        public StateSubClass Sub { get; }
+
+        public StateClass()
+        {
+            Sub = new StateSubClass();
+        }
+    }
+
+    public class StateSubClass
+    {
+        public string Value = "";
+    }
+
+    public class LuaStateClass
+    {
+        private StateClass _target;
 
         public event EventHandler CounterIncremented;
 
         public int IncrementCounter(int number)
         {
-            Counter += number;
+            _target.Counter += number;
             CounterIncremented?.Invoke(null, EventArgs.Empty);
-            return Counter;
+            return _target.Counter;
+        }
+
+        public string Sub
+        {
+            get => _target.Sub.Value;
+            set => _target.Sub.Value = value;
+        }
+
+        [MoonSharpHidden]
+        public LuaStateClass(StateClass c)
+        {
+            _target = c;
         }
     }
 }

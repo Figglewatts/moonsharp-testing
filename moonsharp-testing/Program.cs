@@ -13,6 +13,8 @@ namespace moonsharp_testing
         static void Main(string[] args)
         {
             LuaEngine engine = new LuaEngine();
+            LuaEngine.RegisterProxy<LuaStateClass, StateClass>(r => new LuaStateClass(r));
+            
             StateClass c = new StateClass();
             
             engine.Provide(c);
@@ -20,7 +22,7 @@ namespace moonsharp_testing
 
             Console.WriteLine(c.Counter);
 
-            c.IncrementCounter(1);
+            
 
             Console.ReadLine();
         }
