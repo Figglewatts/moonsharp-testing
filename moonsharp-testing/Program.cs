@@ -16,7 +16,7 @@ namespace moonsharp_testing
             StateClass c = new StateClass();
             
             engine.Provide(c);
-            engine.LoadAndExecute("test.lua");
+            engine.LoadAndExecute("lua/test.lua");
 
             Console.WriteLine(c.Counter);
 
