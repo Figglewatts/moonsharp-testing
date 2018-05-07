@@ -13,10 +13,14 @@ namespace moonsharp_testing
         static void Main(string[] args)
         {
             LuaEngine engine = new LuaEngine();
+            StateClass c = new StateClass();
             
-
+            engine.Provide(c);
             engine.LoadAndExecute("test.lua");
 
+            Console.WriteLine(c.Counter);
+
+            c.IncrementCounter(1);
 
             Console.ReadLine();
         }

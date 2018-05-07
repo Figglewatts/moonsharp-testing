@@ -39,8 +39,15 @@ namespace moonsharp_testing
             }
         }
 
+        public void Provide(dynamic obj)
+        {
+            _env.Globals[obj.GetType().Name] = obj;
+        }
+
         private void createEnvironment()
         {
+            UserData.RegisterAssembly();
+            UserData.RegisterType<EventArgs>();
             _env = new Script();
         }
 
