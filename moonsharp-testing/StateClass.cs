@@ -18,7 +18,7 @@ namespace moonsharp_testing
             Sub = new StateSubClass();
         }
     }
-
+    
     public class StateSubClass
     {
         public string Value = "";
