@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
 
 namespace moonsharp_testing
 {
@@ -41,14 +42,16 @@ namespace moonsharp_testing
 
         public void Provide(object obj)
         {
-            _env.Globals[obj.GetType().Name] = obj;
-        }
+            // figure out if we need to create a proxy
+            var proxyAttributes = (LuaProxyAttribute[])obj.GetType().GetCustomAttributes(typeof(LuaProxyAttribute), true);
+            if (proxyAttributes.Length > 0)
+            {
+                var proxyAttr = proxyAttributes[0];
+                var proxyFactory = Activator.CreateInstance(proxyAttr.ProxyFactoryType);
+                UserData.RegisterProxyType(proxyFactory as IProxyFactory);
+            }
 
-        public static void RegisterProxy<Proxy, Target>(Func<Target, Proxy> wrapDelegate)
-            where Proxy : class
-            where Target : class
-        {
-            UserData.RegisterProxyType(wrapDelegate);
+            _env.Globals[obj.GetType().Name] = obj;
         }
 
         private void createEnvironment()

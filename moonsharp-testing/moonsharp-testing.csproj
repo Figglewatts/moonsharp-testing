@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LuaProxyAttribute.cs" />
     <Compile Include="LuaStaticAPI.cs" />
     <Compile Include="LuaEngine.cs" />
     <Compile Include="Program.cs" />

@@ -13,7 +13,6 @@ namespace moonsharp_testing
         static void Main(string[] args)
         {
             LuaEngine engine = new LuaEngine();
-            LuaEngine.RegisterProxy<LuaStateClass, StateClass>(r => new LuaStateClass(r));
             
             StateClass c = new StateClass();
             
